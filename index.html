@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Resume Builder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            margin-top: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form input,
+        form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .resume-output {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+
+        .resume-output h2 {
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>AI Resume Builder</h1>
+        <form id="resumeForm">
+            <input type="text" id="name" placeholder="Your Name" required />
+            <input type="text" id="email" placeholder="Email" required />
+            <input type="text" id="phone" placeholder="Phone Number" required />
+            <textarea id="skills" placeholder="Skills (comma separated)" required></textarea>
+            <textarea id="experience" placeholder="Experience (each entry on new line)" required></textarea>
+            <textarea id="education" placeholder="Education (each entry on new line)" required></textarea>
+            <button type="submit">Generate Resume</button>
+        </form>
+        <div class="resume-output" id="resumeOutput" style="display:none;"></div>
+    </div>
+
+    <script>
+        const form = document.getElementById('resumeForm');
+        const output = document.getElementById('resumeOutput');
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const skills = document.getElementById('skills').value.split(',').map(s => s.trim());
+            const experience = document.getElementById('experience').value.split('\n');
+            const education = document.getElementById('education').value.split('\n');
+
+            let resumeHTML = `
+        <h2>${name}</h2>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Phone:</strong> ${phone}</p>
+
+        <h3>Skills</h3>
+        <ul>${skills.map(skill => `<li>${skill}</li>`).join('')}</ul>
+
+        <h3>Experience</h3>
+        <ul>${experience.map(exp => `<li>${exp}</li>`).join('')}</ul>
+
+        <h3>Education</h3>
+        <ul>${education.map(edu => `<li>${edu}</li>`).join('')}</ul>
+      `;
+
+            output.innerHTML = resumeHTML;
+            output.style.display = 'block';
+        });
+    </script>
+</body>
+
+</html>
